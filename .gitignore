@@ -1,0 +1,11 @@
+# Compiled binaries
+*.exe
+*.out
+*.o
+
+# Benchmark outputs
+benchmark_results.csv
+
+# OS files
+.DS_Store
+Thumbs.db
