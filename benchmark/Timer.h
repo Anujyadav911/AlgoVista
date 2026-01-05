@@ -12,12 +12,17 @@ public:
         startTime = std::chrono::high_resolution_clock::now();
     }
 
+    // Returns elapsed time in microseconds
     double stop() {
         auto endTime = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::micro> elapsed = endTime - startTime;
-        return elapsed.count(); // microseconds
+        return elapsed.count();
     }
-    
+
+    // Explicit reset for reuse
+    void reset() {
+        startTime = std::chrono::high_resolution_clock::now();
+    }
 };
 
 #endif
