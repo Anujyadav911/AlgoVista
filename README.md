@@ -43,8 +43,12 @@ This coverage allows comparison between:
 
 ```
 AlgoVista/
+├── benchmark/
+│   └── Timer.h                     # High-resolution timer (µs)
+├── utils/
+│   └── Logger.h                    # Simple console logger
 ├── src/
-│   ├── main.cpp                    # Entry point
+│   ├── main.cpp                    # Entry point (mode selection)
 │   ├── algorithms/                 # Sorting algorithm implementations
 │   │   ├── SortingAlgorithm.h      # Common interface
 │   │   ├── BubbleSort.*
@@ -55,15 +59,11 @@ AlgoVista/
 │   │   ├── MergeSort.*
 │   │   └── CountingSort.*
 │   ├── engine/                     # Benchmark orchestration
-│   │   ├── AlgorithmRegistry.*
-│   │   └── BenchmarkEngine.*
-│   ├── input/                      # Input generation
+│   │   ├── AlgorithmRegistry.*     # Registers algorithms
+│   │   └── BenchmarkEngine.*       # Runs single/scale benchmarks
+│   ├── input/                      # Input generation (manual + random)
 │   │   └── InputGenerator.*
-│   ├── benchmark/
-│   │   └── Timer.h                 # High-resolution timer
-│   └── utils/
-│       └── Logger.h
-├── benchmark_results.csv           # Auto-generated benchmark report
+│   └── benchmark_results.csv       # Auto-generated benchmark report
 └── README.md
 ```
 
@@ -96,7 +96,8 @@ AlgoVista/
   - Small input (<1000): 200 runs
   - Large input (≥1000): 20 runs
 - **Minimum clamp**: Times < 1 µs are clamped to avoid misleading 0.00 values
-- **Ranking**: Algorithms ranked per input size by average time
+- **Per-algorithm stats**: For each algorithm and input size, **average**, **best**, and **worst** times are tracked
+- **Ranking**: Algorithms ranked per input size by average time and written to CSV
 
 ---
 
@@ -108,11 +109,10 @@ AlgoVista/
 # TimeUnit: Microseconds (µs)
 # Iterations: Adaptive (200 for small, 20 for large)
 
-Algorithm,InputSize,AvgTimeMicroseconds,Rank
-Quick Sort,100,1.00,1
-Heap Sort,100,39.99,2
-Merge Sort,100,200.02,5
-Bubble Sort,100,245.65,6
+Algorithm,InputSize,AvgTimeMicroseconds,BestTimeMicroseconds,WorstTimeMicroseconds,Rank
+Heap Sort,100,1.00,1.00,1.00,1
+Quick Sort,100,46.31,1.00,8000.00,2
+Insertion Sort,100,71.28,1.00,14058.00,3
 ```
 
 The CSV is Excel / Google Sheets friendly and ready for plotting.
@@ -134,16 +134,15 @@ The CSV is Excel / Google Sheets friendly and ready for plotting.
 From `src/` directory:
 
 ```bash
-g++ main.cpp engine/BenchmarkEngine.cpp engine/AlgorithmRegistry.cpp \
-    algorithms/BubbleSort.cpp algorithms/InsertionSort.cpp algorithms/SelectionSort.cpp \
-    algorithms/QuickSort.cpp algorithms/HeapSort.cpp algorithms/MergeSort.cpp \
-    algorithms/CountingSort.cpp input/InputGenerator.cpp -o algovista
+g++ main.cpp engine/BenchmarkEngine.cpp engine/AlgorithmRegistry.cpp algorithms/BubbleSort.cpp algorithms/InsertionSort.cpp algorithms/SelectionSort.cpp algorithms/QuickSort.cpp algorithms/HeapSort.cpp algorithms/MergeSort.cpp algorithms/CountingSort.cpp input/InputGenerator.cpp -o algovista
+
 ```
 
 Run:
 
 ```bash
 ./algovista
+
 ```
 
 ---
