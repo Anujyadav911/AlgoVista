@@ -1,8 +1,8 @@
 # AlgoVista 🚀
 
-### A High-Performance C++ Sorting Algorithm Benchmarking Framework
+### A High-Performance Java Sorting Algorithm Benchmarking Framework
 
-AlgoVista is a **modular C++ benchmarking framework** designed to analyze, compare, and rank classical sorting algorithms across varying input sizes and distributions.
+AlgoVista is a **modular Java benchmarking framework** designed to analyze, compare, and rank classical sorting algorithms across varying input sizes and distributions.
 
 The project focuses on **performance engineering, clean architecture, and reproducible benchmarking**, making it suitable for **product-based company interviews** and **systems-focused roles**.
 
@@ -15,7 +15,7 @@ The project focuses on **performance engineering, clean architecture, and reprod
 - 🧩 **Extensible architecture** – add new algorithms with minimal changes
 - 📈 **Scale testing** on increasing input sizes
 - 📝 Automatically exports results to **CSV with metadata and ranking**
-- ⚙️ Written in **modern C++ (STL + chrono)**, no external dependencies
+- ⚙️ Written in **modern Java (standard library only)**, no external dependencies
 
 ---
 
@@ -43,27 +43,28 @@ This coverage allows comparison between:
 
 ```
 AlgoVista/
-├── benchmark/
-│   └── Timer.h                     # High-resolution timer (µs)
-├── utils/
-│   └── Logger.h                    # Simple console logger
-├── src/
-│   ├── main.cpp                    # Entry point (mode selection)
-│   ├── algorithms/                 # Sorting algorithm implementations
-│   │   ├── SortingAlgorithm.h      # Common interface
-│   │   ├── BubbleSort.*
-│   │   ├── InsertionSort.*
-│   │   ├── SelectionSort.*
-│   │   ├── QuickSort.*
-│   │   ├── HeapSort.*
-│   │   ├── MergeSort.*
-│   │   └── CountingSort.*
-│   ├── engine/                     # Benchmark orchestration
-│   │   ├── AlgorithmRegistry.*     # Registers algorithms
-│   │   └── BenchmarkEngine.*       # Runs single/scale benchmarks
-│   ├── input/                      # Input generation (manual + random)
-│   │   └── InputGenerator.*
-│   └── benchmark_results.csv       # Auto-generated benchmark report
+├── java/
+│   └── algovista/
+│       ├── Main.java               # Entry point (mode selection)
+│       ├── benchmark/
+│       │   └── Timer.java          # High-resolution timer (µs)
+│       ├── utils/
+│       │   └── Logger.java         # Simple console logger
+│       ├── algorithms/             # Sorting algorithm implementations
+│       │   ├── SortingAlgorithm.java
+│       │   ├── BubbleSort.java
+│       │   ├── InsertionSort.java
+│       │   ├── SelectionSort.java
+│       │   ├── QuickSort.java
+│       │   ├── HeapSort.java
+│       │   ├── MergeSort.java
+│       │   └── CountingSort.java
+│       ├── engine/                 # Benchmark orchestration
+│       │   ├── AlgorithmRegistry.java
+│       │   └── BenchmarkEngine.java
+│       └── input/                  # Input generation (manual + random)
+│           └── InputGenerator.java
+├── benchmark_results.csv           # Auto-generated benchmark report
 └── README.md
 ```
 
@@ -129,20 +130,14 @@ The CSV is Excel / Google Sheets friendly and ready for plotting.
 
 ---
 
-## 🛠️ Build & Run (Windows – MinGW)
+## 🛠️ Build & Run (Java)
 
-From `src/` directory:
-
-```bash
-g++ main.cpp engine/BenchmarkEngine.cpp engine/AlgorithmRegistry.cpp algorithms/BubbleSort.cpp algorithms/InsertionSort.cpp algorithms/SelectionSort.cpp algorithms/QuickSort.cpp algorithms/HeapSort.cpp algorithms/MergeSort.cpp algorithms/CountingSort.cpp input/InputGenerator.cpp -o algovista
-
-```
-
-Run:
+From the repository root:
 
 ```bash
-./algovista
-
+mkdir -p out
+javac -d out $(find java -name "*.java")
+java -cp out algovista.Main
 ```
 
 ---
@@ -152,7 +147,7 @@ Run:
 This project demonstrates:
 - Strong understanding of data structures & algorithms
 - Practical performance measurement
-- Clean, extensible C++ system design
+- Clean, extensible Java system design
 - Ability to translate theory into measurable results
 
 ---
@@ -170,7 +165,7 @@ This project demonstrates:
 
 **Anuj Yadav**  
 Final-year B.Tech student (CSE)  
-Focused on C++, DSA, and performance-oriented systems
+Focused on Java, DSA, and performance-oriented systems
 
 ---
 
